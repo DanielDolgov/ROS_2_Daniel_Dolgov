@@ -1,0 +1,8 @@
+﻿{
+  "launch_method": "wsl2",
+  "os_version": "Ubuntu 24.04.4 LTS (Noble Numbat)",
+  "ros_distro": "jazzy",
+  "gazebo_version": "8.15.0",
+  "rmw_implementation": "rmw_fastrtps_cpp",
+  "ros_domain_id": 16
+}
