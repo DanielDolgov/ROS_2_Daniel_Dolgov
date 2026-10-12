@@ -1,4 +1,4 @@
-﻿name: ROS checks
+name: ROS checks
 
 on: [push, pull_request]
 

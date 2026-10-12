@@ -1,4 +1,4 @@
-﻿{
+{
   "launch_method": "wsl2",
   "os_version": "Ubuntu 24.04.4 LTS (Noble Numbat)",
   "ros_distro": "jazzy",
