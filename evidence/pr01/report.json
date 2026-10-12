@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR01",
+  "commit": "dcab03906e36dc8450508c8b422ea16fd5fa5700",
+  "course_kit": {
+    "version": "v1-w05-bca214e3de6f",
+    "archive_sha256": "bca214e3de6f90f9513049dfa0f36fee65ad834da502dc3f3f8fb443517b5197"
+  },
+  "commands": [
+    "ros2 doctor --report",
+    "ros2 run turtlesim turtlesim_node",
+    "ros2 run turtlesim turtle_teleop_key",
+    "ros2 node list --no-daemon --spin-time 2",
+    "ros2 topic list -t",
+    "ros2 node info /turtlesim",
+    "ros2 topic type /turtle/pose",
+    "POSE_TYPE=$(ros2 topic type /turtle1/pose)",
+    "ros2 topic echo /turtle1/pose --once",
+    "ros2 topic hz /turtle1/pose",
+    "export ROS_DOMAIN_ID=17; ros2 run turtlesim turtle_teleop_key",
+    "ros2 node list --no-daemon --spin-time 2",
+    "timeout 5s ros2 topic echo /turtle1/pose \"$POSE_TYPE\" --once > temp_rep_file",
+    "export ROS_DOMAIN_ID=16; ros2 run turtlesim turtle_teleop_key",
+    "ros2 node list --no-daemon --spin-time 2",
+    "timeout 5s ros2 topic echo /turtle1/pose \"$POSE_TYPE\" --once > temp_rep_file"
+  ],
+  "tests": [
+    {
+      "name": "ros2_graph_topology",
+      "status": "passed"
+    },
+    {
+      "name": "turtlesim_pose_frequency_measurment",
+      "status": "passed"
+    },
+    {
+      "name": "ros_domain_isolation_test",
+      "status": "passed"
+    },
+    {
+      "name": "ros_domain_reconnection_test",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "При запуске подписчика в домене ROS_DOMAIN_ID=17 при работающем симуляторе в ROS_DOMAIN_ID=16 данные не поступают; timeout 5s ros2 topic echo /turtle1/pose turtlesim/msg/Pose --once выдаёт код возврата 124",
+    "root_cause": "Сетевая изоляция участников ROS 2 на уровне DDS Discovery (SPDP): поэтому участники в разных доменах слушают разные порты и не видят анонсов друг друга",
+    "proof_after": "После возврата подписчика в домен ROS_DOMAIN_ID=16, timeout 5s ros2 topic echo /turtle1/pose turtlesim/msg/Pose --once завершается успешно с кодом возврата 0"
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true
+  },
+  "time": {
+    "contact_academic_hours": 2,
+    "self_study_hours": 2
+  },
+  "ai_used": true
+}
